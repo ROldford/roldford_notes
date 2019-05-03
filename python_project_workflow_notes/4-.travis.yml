@@ -1,0 +1,24 @@
+# Example Travis CI config file
+# Cookiecutter will make a boilerplate config, but it needs updating to fit your needs.
+
+language: python
+python:
+- 3.5
+- 3.6
+# Travis doesn't support 3.7 natively, but this hack will make it work
+matrix:
+  include:
+  - python: 3.7
+    dist: xenial
+    sudo: true
+deploy:
+  provider: pypi
+  user: <your username> # Should be autocompleted by cookiecutter
+  # Password is encrypted here by travis_pypi_setup script
+  on:
+    tags: true
+    branch: master
+    python: '3.7' # Important! Keeps Travis from trying to deploy from all builds!
+    # Any one version is fine, I use latest version
+install: pip3 install -r requirements.txt
+script: python setup.py test

@@ -1,0 +1,20 @@
+# Example .travis.yml for Travis/GitHub deployment
+
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - node_modules
+script:
+  - npm test
+  - npm run build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github-token: $GITHUB_TOKEN # Set in TravisCI repo settings
+  keep-history: true
+  project: ./build/
+  local-dir: ./build/
+on:
+  branch: master
